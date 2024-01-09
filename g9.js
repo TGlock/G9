@@ -83,7 +83,8 @@ const request_parse = (request, response) => {
 const augment = (g9, request, response) => {
 
     //augment request
-    const now = performance.now()
+    const now = performance.now();
+
     request.is_event_stream = (request.headers.accept === 'text/event-stream')
     request.client_ip = ip_get(request)
     request.trace_id = g9._pid + now.toFixed(4)
@@ -175,7 +176,7 @@ const augment = (g9, request, response) => {
     }
 
     //create session ? ( skip session processing for static resources )
-    if (!request.path.startsWith(g9._static_prefix)) {
+    if (request?.route.session_create) {
         let sess = session_create(g9, request, response)
         request.session_mgr = g9._session_mgr
         request.session_key = sess.session_key
