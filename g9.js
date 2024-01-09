@@ -168,19 +168,17 @@ const augment = (g9, request, response) => {
         //TODO - consider using route to hint the intended response data type:
         //json, text, html, binary, etc
         //avoids typeof and duck typing ... and error format...
-    } else {
-        // TODO - determine text or json 404 response...
-        // check accepts ? method ? hueristics?
-        // check path '/static' - send html, '/api/ send json
-        response.prepare(404, 'Not Found', send_text)
-    }
 
-    //create session ? ( skip session processing for static resources )
-    if (request?.route.session_create) {
-        let sess = session_create(g9, request, response)
-        request.session_mgr = g9._session_mgr
-        request.session_key = sess.session_key
-        request.session_obj = sess.session_obj
+        //create session ? 
+        if (request.route.session_create) {
+            let sess = session_create(g9, request, response)
+            request.session_mgr = g9._session_mgr
+            request.session_key = sess.session_key
+            request.session_obj = sess.session_obj
+        }
+
+    } else {
+        response.prepare(404, 'Not Found', send_text)
     }
 
     //populated later...
@@ -206,7 +204,6 @@ class G9 {
         this._csrf = config.csrf || true
         this._session_cookie_name = config.session.cookie || 'g9-sid'
         this._session_mgr = new Session({ttl:(90 * 1000)})
-        this._static_prefix = config.static_prefix || '/static/'
         this._upload_dir = config.upload_dir
         this._server = createServer() //this.serve auto performs .on('request', this.serve)
         this._router = new Router()
