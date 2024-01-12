@@ -156,10 +156,10 @@ const augment = (g9, request, response) => {
 
     // WHATWG url parsing ... see https://nodejs.org/api/url.html#class-url
     request.URL = new URL(g9._protocol + request.headers.host + request.url)
-    request.path = decodeURIComponent(request.url)
+    request.path = decodeURIComponent(request.url) //URL.pathname can have percent encoded chars...
     const q = request.path.indexOf('?')
     if (q !== -1) {
-        request.path = request.path.substr(0, q)
+        request.path = request.path.substring(0, q)
     }
 
     //route match ?
@@ -314,6 +314,9 @@ class G9 {
 
             // 'error' event - log it
             request.on('error', request_on_error)
+
+            //TODO - consider only parsing understood media types
+            //see - https://www.iana.org/assignments/media-types/media-types.xhtml
 
             //if multipart stream ... consume and parse it...
             if (request.headers['content-type']?.substring(0, 20) === 'multipart/form-data;') {
