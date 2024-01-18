@@ -27,7 +27,7 @@ const session_create = (g9, request, response) => {
 
     if (session_key) { // g9-sid cookie value - is it in the store ?  if so, 'touch' it
         session_obj = g9._session_mgr.get(session_key, true)
-        if (!(session_obj == null)) { // not found, invalid or expired...
+        if (session_obj === null) { // not found, invalid or expired...
             session_key = ''  // set to empty so new session object is created falling through below...
         }
     }
@@ -203,7 +203,7 @@ class G9 {
         this._date_formatter = new Intl.DateTimeFormat(config.date_formatter.locale || 'en-US', config.date_format || { weekday: 'narrow', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: 'numeric', fractionalSecondDigits: 3, hour12: true, timeZone: 'EST' }).format
         this._csrf = config.csrf || true
         this._session_cookie_name = config.session.cookie || 'g9-sid'
-        this._session_mgr = new Session({ttl:(90 * 1000)})
+        this._session_mgr = new Session(config.session)
         this._upload_dir = config.upload_dir
         this._server = createServer() //this.serve auto performs .on('request', this.serve)
         this._router = new Router()
@@ -250,11 +250,12 @@ class G9 {
         console.log(this._date_formatter(new Date()),
             req.client_ip,
             req.trace_id,
+            this._session_mgr.size,
             req.session_key || '--------------------------------',
             req.method,
             res.statusCode,
             (performance.now() - req.start_time).toFixed(4) + 'ms',
-            req?.route?.execute?.name || '\t',
+            req?.route?.execute?.name || '--',
             req.path)
     }
 
