@@ -8,6 +8,7 @@ import querystring from 'node:querystring'
 
 import { Router } from './lib/router.js'
 import { Session } from './lib/session.js'
+import { Logger, LOG_LEVELS } from './lib/logger.js';
 
 import { multipart } from './lib/multipart.js';
 import { cookie_set, cookie_get } from './lib/cookie.js'
@@ -61,7 +62,7 @@ const request_parse = (request, response) => {
         } else if (content_type.startsWith('multipart/form-data')) {
             return //data already parsed
         } else {
-            console.log('unknown content-type')
+            this._logger.log('unknown content-type')
             response.statusCode = 415 //Unsupported Media Type - see https://datatracker.ietf.org/doc/html/rfc7231
             request.params = null
             parser = null
@@ -207,47 +208,45 @@ class G9 {
         this._upload_dir = config.upload_dir
         this._server = createServer() //this.serve auto performs .on('request', this.serve)
         this._router = new Router()
+        this._logger = Logger(config.log_level || LOG_LEVELS.debug)
     }
 
     close() {
-        console.log('closing listener...')
+        this._logger.log('closing listener...')
         this._server.close((err) => {
             if (err) {
-                console.log('listener close err', err)
+                this._logger.log('listener close err', err)
             }
             return false
         })
-        console.log('listener closed.')
+        this._logger.log('listener closed.')
         return true
     }
 
-    listen(port) {
-        if (port) {
-            this._port = port
-        }
-
-        // register handler
-        this._server.on('request', this.serve)
-
-        // listen
-        try {
-            this._server.listen({ port: this._port, host: '0.0.0.0' })
-        } catch (err) {
-            if (err.code === 'EADDRINUSE') {
-                console.error(`Address in use: ${this._domain + ':' + this._port} `);
+    listen = (port) => {
+        return new Promise((resolve, reject) => {
+            if (port) {
+                this._port = port
             }
-            throw err
-        }
-
-        this._server.on('error', (err) => {
-            console.error('Server Error:', err);
+    
+            this._server.on('listening', () => {
+                this._logger.info(`${this._protocol}${this._hostname}:${this._port} started at ${new Date()}`)
+                this._server.on('request', this.serve)// register handler
+                resolve();
+            })
+    
+            this._server.on('error', (err) => {
+                this._logger.error('Server listen error', err);
+                reject(err);
+            })
+    
+            this._server.listen({ port: this._port });
         });
-
-        console.log(`${this._protocol}${this._hostname}:${this._port} started at ${new Date()}`)
     }
+    
 
     log(req, res) {
-        console.log(this._date_formatter(new Date()),
+        this._logger.log(this._date_formatter(new Date()),
             req.client_ip,
             req.trace_id,
             this._session_mgr.size,
@@ -265,6 +264,14 @@ class G9 {
     get router() {
         return this._router
     }
+
+    set logger(logger) {
+        this._logger = logger
+    }
+    get logger() {
+        return this._logger
+    }
+
     get session_mgr() {
         return this._session_mgr
     }
@@ -306,7 +313,7 @@ class G9 {
 
             // invoked on request 'error' event
             const request_on_error = (error) => {
-                console.log("ERROR - request 'error' event raised:", error)
+                this._logger.log("ERROR - request 'error' event raised:", error)
                 //TODO - attempt to handle somehow ?
                 response.prepare(500, error_to_json(error), send_json)
             }
@@ -321,22 +328,22 @@ class G9 {
 
             //if multipart stream ... consume and parse it...
             if (request.headers['content-type']?.substring(0, 20) === 'multipart/form-data;') {
-                console.log('G9 before multipart')
+                this._logger.log('G9 before multipart')
 
                 const resolved_pre = (data) => {
-                    console.log('resolved pre', data)
+                    this._logger.log('resolved pre', data)
                 }
                 const rejected_pre = (err) => {
-                    console.log('rejected pre', err)
+                    this._logger.log('rejected pre', err)
                 }
                 const resolved = async (data) => {
-                    console.log('G9 after multipart');
+                    this._logger.log('G9 after multipart');
                     request.data = data
                     await request_complete()
                     return
                 }
                 const rejected = (error) => {
-                    console.log('Multipart Error (rejected)', error)
+                    this._logger.log('Multipart Error (rejected)', error)
                     response.prepare(500, error, send_error)
                     throw error
                     //return
@@ -359,7 +366,7 @@ class G9 {
             }
 
         } catch (error) {
-            console.log('G9 serve error:', error)
+            this._logger.log('G9 serve error:', error)
             response.statusCode = 500
             response.end()
         }
