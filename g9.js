@@ -246,7 +246,7 @@ class G9 {
     
 
     log(req, res) {
-        this._logger.log(this._date_formatter(new Date()),
+        this._logger.info(this._date_formatter(new Date()),
             req.client_ip,
             req.trace_id,
             this._session_mgr.size,
