@@ -5,11 +5,12 @@
 A minimalist Node.js ~~framework~~ library written to learn and experiment.  
 
 ### Features ###
-- **[Routing](Router):** Simple routing system for handling HTTP requests
-  - path based variables
-    - data types int, string, float
+- **[Router](#Router)** 
+  - supports path based variables including types: int, string and float
+  - path based middleware
+  - custom not found
 - **Static Files with Compression and Cacheing:**
-  - Gzip and Brotli compression
+  - Gzip and Brotli 
   - Etag support 
   - File watcher - auto recompress 
 - **Middleware:** Support for 'per Route' unique middleware stacks
@@ -58,7 +59,10 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - app dictates static file response via functions in g9/sender.js
   - app dictates compression rules via functions in g9/compress.js
 
-### #Router ###
+### <a name="head12345"></a>A Heading in this SO entry!
+#### Best answer is in this [link](#head12345)
+
+ ### Router ###
   Supports 
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
@@ -66,7 +70,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
         ` /this/is/a/path`
       - **variable** - paths with named segment parameters  
         ` /some/id/:int:id/`
-      - **wildcard** - paths with a fixed '/prefix/' that ends with '*' ( cannot have variable segments )  
+      - **wildcard** - paths with a fixed '/prefix/' and ends with '*' ( cannot have variable segments )  
         ` /static/*`
 
   **Initializing Routes**
