@@ -51,7 +51,12 @@ A minimalist Node.js ~~framework~~ library written by me just to learn and exper
     - multipart.js
     - (etc)
 
-app and g9 are sibling directories.   
+Notes:
+- app and g9 are sibling directories.
+- app contains api endpoints such as users etc.
+- app manages database and associated driver and code
+- app dictates static file response via functions in g9/sender.js
+- app dictates compression rules via functions in g9/compress.js
 
 ### Inspired by (in no particular order) ###
 - Koa.js
