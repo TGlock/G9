@@ -65,11 +65,13 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 
   Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
 
-  Early versions of g9 explored a third context (ctx) parameter similar to other frameworks.  Ultimately decided to simply decorate the request object rather than create an addition object. Use of symbols (in progress) should help to avoid name collisions if 3rd party packages are introduced.
+  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
   
-  The req object is decorated with the following attributes.
+  The native node request and response objects are minimally decorated in the G9.augment method method.
 
-  
+  A lesson learned was that use of middleware that needs to alter the response requires some mechanism to hold (buffer) the response until the last middleware returns.
+
+  However, this is at odds with streaming responses; thus there is functionality to support both requirements simultaneously.
  
 ---
  ### Router ###
@@ -140,6 +142,9 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 ---    
 ### Static Files ###
 
+Static file handling functions are located in sender.js.  
+
+These functions support scenarios such as file streaming from disk and/or compressing files below a certain size and storing sizes, etags, mimetypes and other data in a map such that responses can be sent immediately.  The latter capability is associated with a file watcher to ensure changes are captured.
 
 ---
 ### Inspired by (in no particular order) ###
