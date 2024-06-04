@@ -18,6 +18,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **Logging:** Extends console for logging 
 - **Sessions:** Simple memory based session manager based on JS Map
 - **Cookies:** Simple cookie manager for session cookies
+- **Request, Response** handler signature
 
 ### Dependencies (Optional) ### 
 - postgres by porsager - https://github.com/porsager/postgres
@@ -59,23 +60,17 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - app dictates static file response via functions in g9/sender.js
   - app dictates compression rules via functions in g9/compress.js
 
-### <a name="head12345"></a>A Heading in this SO entry!
-#### Best answer is in this [link](#head12345)
+---
 
  ### Router ###
   Supports 
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
     
-  **fixed** - complete paths that do not contain ':' or ending wildcard '*'  
-     `/this/is/a/path` 
-     
-  **variable** - paths with named segment parameters  
-     `/some/id/:int:id/` 
-     
-  **wildcard** - paths with a fixed '/prefix/' and end with '*' 
-      `/static/*` 
-
+  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or ending wildcard '\*'  
+  **variable** - `/some/id/:int:id/` paths with named segment parameters  
+  **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*' 
+      
   **Initializing Routes**
   
     let r = g9.router
@@ -131,7 +126,12 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
       The function returned from router.compose must then be added the the router with path and method as always. 
     */
     r.get('/middleware', create_route_middleware_stack(r))`
-    
+
+---    
+### Static Files ###
+
+
+---
 ### Inspired by (in no particular order) ###
 - Koa.js
 - Hono.js
