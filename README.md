@@ -51,12 +51,25 @@ A minimalist Node.js ~~framework~~ library written by me just to learn and exper
     - multipart.js
     - (etc)
 
-Notes:
-- app and g9 are sibling directories.
-- app contains api endpoints such as users etc.
-- app manages database and associated driver and code
-- app dictates static file response via functions in g9/sender.js
-- app dictates compression rules via functions in g9/compress.js
+  Notes:
+  - app and g9 are sibling directories.
+  - app contains api endpoints such as users etc.
+  - app manages database and associated driver and code
+  - app dictates static file response via functions in g9/sender.js
+  - app dictates compression rules via functions in g9/compress.js
+
+### Router ###
+Supports 
+  - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
+  - Paths
+    - "normal"   -  paths that do not contain ':' or ending wildcard '*'
+      - ex:  > /this/is/a/path
+    - "variable" -  paths with named segment parameters
+      - ex:  > /some/id/:int:id/
+    - "wildcard" -  paths with a fixed '/prefix/' that ends with '*' ( cannot have variable segments )
+      - ex:  > /static/*
+
+
 
 ### Inspired by (in no particular order) ###
 - Koa.js
