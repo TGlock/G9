@@ -2,9 +2,7 @@
 
 ## Minimal ##
 
-G9 is a minimalist Node.js ~~framework~~ library written by me just to learn and experiment. 
-
-G9 focuses on simplicity and developer experience and includes only essential features needed to get started.
+A minimalist Node.js ~~framework~~ library written by me just to learn and experiment.  
 
 ### Features ###
 
