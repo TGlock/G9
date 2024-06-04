@@ -65,7 +65,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 
   Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
 
-  Early versions of g9 explored a third context (ctx) parameter similar to other frameworks.  Ultimately decoded to simply decorate the request object and will utilize symbols to avoid name collision.
+  Early versions of g9 explored a third context (ctx) parameter similar to other frameworks.  Ultimately decided to simply decorate the request object rather than create an addition object. Use of symbols (in progress) should help to avoid name collisions if 3rd party packages are introduced.
   
   The req object is decorated with the following attributes.
 
