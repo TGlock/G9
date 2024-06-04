@@ -61,7 +61,17 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - app dictates compression rules via functions in g9/compress.js
 
 ---
+ ### Request, Response ### 
 
+  Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
+
+  Early versions of g9 explored a third context (ctx) parameter similar to other frameworks.  Ultimately decoded to simply decorate the request object and will utilize symbols to avoid name collision.
+  
+  The req object is decorated with the following attributes.
+
+  
+ 
+---
  ### Router ###
   Supports 
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
