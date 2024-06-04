@@ -68,11 +68,13 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
     - Paths
     
       **normal** - paths that do not contain ':' or ending wildcard '*'  
-        ` /this/is/a/path `
+         /this/is/a/path 
+         
       **variable** - paths with named segment parameters  
-        ` /some/id/:int:id/ `
+         /some/id/:int:id/ 
+         
       **wildcard** - paths with a fixed '/prefix/' and ends with '*' ( cannot have variable segments )  
-        ` /static/* `
+         /static/* 
 
   **Initializing Routes**
   
