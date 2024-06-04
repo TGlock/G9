@@ -5,7 +5,6 @@
 A minimalist Node.js ~~framework~~ library written by me just to learn and experiment.  
 
 ### Features ###
-
 - **Routing:** Simple routing system for handling HTTP requests
   - path based variables
     - data types int, string, float
@@ -22,6 +21,37 @@ A minimalist Node.js ~~framework~~ library written by me just to learn and exper
 ### Dependencies (Optional) ### 
 - postgres by porsager - https://github.com/porsager/postgres
 - @fastify/busboy - https://github.com/fastify/busboy
+
+### Application File System Structure ###
+- The directory structure of an application using G9 might as follows:
+
+- app
+  - api
+    - api_users.js
+    - api_xxxxx.js
+  - lib
+    - database.js
+    - utils.js
+  - web
+    - static
+      - htm
+      - img
+      - css
+      - js
+- g9
+  - lib
+    - g9.js
+    - compress.js
+    - router.js
+    - sender.js
+    - sessions.js
+    - cookie.js
+    - logger.js
+    - mime.js
+    - multipart.js
+    - (etc)
+
+app and g9 are sibling directories.   
 
 ### Inspired by (in no particular order) ###
 - Koa.js
