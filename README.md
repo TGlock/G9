@@ -62,14 +62,28 @@ A minimalist Node.js ~~framework~~ library written by me just to learn and exper
 Supports 
   - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
   - Paths
-    - "normal"   -  paths that do not contain ':' or ending wildcard '*'
-      - ex:  > /this/is/a/path
-    - "variable" -  paths with named segment parameters
-      - ex:  > /some/id/:int:id/
-    - "wildcard" -  paths with a fixed '/prefix/' that ends with '*' ( cannot have variable segments )
-      - ex:  > /static/*
+    - **normal** - paths that do not contain ':' or ending wildcard '*'  
+      ` /this/is/a/path`
+    - **variable** - paths with named segment parameters  
+      ` /some/id/:int:id/`
+    - **wildcard** - paths with a fixed '/prefix/' that ends with '*' ( cannot have variable segments )  
+      ` /static/*`
 
+  **Initializing Routes**
+     
+    `let r = g9.router
 
+    r.not_found = do_not_found  // allows for custom 404 handler
+    
+    r.get('/favicon.ico', do_favicon).session_create = false  //exclude any route from session check & create.
+
+    /* various datatypes supported */
+    r.get('/json', do_json)
+    r.get('/html', do_html)
+    r.get('/text', do_text)
+    r.get('/buffer', do_buffer)
+    r.get('/file', do_file)`
+  
 
 ### Inspired by (in no particular order) ###
 - Koa.js
