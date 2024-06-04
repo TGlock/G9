@@ -67,14 +67,14 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
     
-      **normal** - paths that do not contain ':' or ending wildcard '*'  
-         /this/is/a/path 
-         
-      **variable** - paths with named segment parameters  
-         /some/id/:int:id/ 
-         
-      **wildcard** - paths with a fixed '/prefix/' and ends with '*' ( cannot have variable segments )  
-         /static/* 
+  **fixed** - complete paths that do not contain ':' or ending wildcard '*'  
+     `/this/is/a/path` 
+     
+  **variable** - paths with named segment parameters  
+     `/some/id/:int:id/` 
+     
+  **wildcard** - paths with a fixed '/prefix/' and end with '*' 
+      `/static/*` 
 
   **Initializing Routes**
   
