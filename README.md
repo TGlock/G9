@@ -12,15 +12,15 @@ Written only to learn and experiment.
 - **[Static Files with Compression](#Static-Files):**
   - Gzip and Brotli
   - Etag support
-- **[Middleware](#Router):** Support for 'per Route' unique middleware stacks
-- **[Logging](#Logging):** Extends console for logging
-- **[Sessions](#Sessions):** Simple JS Map based session manager
-- **[Cookies](#Cookies):** Simple cookie manager for session cookies
-- **[Configurable](#Config):** One configuration file
+- **[Middleware](#Router)** Support for 'per Route' unique middleware stacks
+- **[Logging](#Logging)** Extends console for logging
+- **[Sessions](#Sessions)** Simple JS Map based session manager
+- **[Cookies](#Cookies)** Simple cookie manager for session cookies
+- **[Configurable](#Config)** One configuration file
 - **[Request, Response](#Request-Response)** handler signature
 - **[Application Directory Structure](#Application-Directory-Structure)** Application Directory structure
 - **Two [Dependencies](#Dependencies-Optional)** A database driver and multipart/form-data parsing
-- **Error Handling:** All errors bubble to a single block
+- **Error Handling** All errors bubble to a single block
 
 ---
  ### Router ###
