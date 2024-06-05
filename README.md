@@ -35,48 +35,52 @@ Written only to learn and experiment.
   **Initializing Routes**
 
 ```js
-let r = g9.router
+const routes_init = (g9) => {
 
-// set custom 404 handler
-r.not_found = do_not_found
+  let r = g9.router
+  
+  // set custom 404 handler
+  r.not_found = do_not_found
+  
+  /* exclude a route from session check & create. */
+  r.get('/favicon.ico', do_favicon).session_create = false
+  
+  // various datatypes supported
+  r.get('/json', do_json)
+  r.get('/html', do_html)
+  r.get('/text', do_text)
+  r.get('/buffer', do_buffer)
+  r.get('/file', do_file)
+  
+  // pass method as parameter example
+  r.add_route(path, 'GET', func)
+  
+  // route middleware example
+  const authenticated = async (req, res, fn) => {
+      console.log('a enter')
+      res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
+      if (fn) await fn()
+      console.log('a exit')
+  }
+  const authorized = async (req, res, fn) => {
+      console.log('b enter')
+      res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
+      if (fn) await fn()
+      console.log('b exit')
+  }
+  const handle_route = async (req, res, fn) => {
+      console.log('c enter')
+      if (fn) await fn()
+      res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
+      console.log('c exit')
+  }
+  
+  /* Router.compose accepts an array of async functions and executes them in the order passed.
+  Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  */
+  
+  r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 
-/* exclude a route from session check & create. */
-r.get('/favicon.ico', do_favicon).session_create = false
-
-// various datatypes supported
-r.get('/json', do_json)
-r.get('/html', do_html)
-r.get('/text', do_text)
-r.get('/buffer', do_buffer)
-r.get('/file', do_file)
-
-// pass method as parameter example
-r.add_route(path, 'GET', func)
-
-// route middleware example
-const authenticated = async (req, res, fn) => {
-    console.log('a enter')
-    res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
-    if (fn) await fn()
-    console.log('a exit')
 }
-const authorized = async (req, res, fn) => {
-    console.log('b enter')
-    res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
-    if (fn) await fn()
-    console.log('b exit')
-}
-const handle_route = async (req, res, fn) => {
-    console.log('c enter')
-    if (fn) await fn()
-    res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
-    console.log('c exit')
-}
-
-/* Router.compose accepts an array of async functions and executes them in the order passed.
-Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  */
-
-r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 ```
 
 Router.compose is based on MIT licensed 'koa-compose' package ( https://github.com/koajs/compose )
