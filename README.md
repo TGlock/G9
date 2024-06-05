@@ -1,8 +1,8 @@
-# G9 - a simple nodejs ~~Web Framework~~ library #
+# g9 - a simple nodejs ~~Web Framework~~ library #
 
 ## Minimal ##
 
-A minimalist Node.js ~~framework~~ library written to learn and experiment.
+A minimalist Node.js ~~framework~~ library written to learn and experiment. 
 
 ### Features ###
 - **[Router](#Router)**
@@ -14,11 +14,12 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - Etag support
 - **[Middleware](#Router):** Support for 'per Route' unique middleware stacks
 - **[Logging](#Logging):** Extends console for logging
-- **[Sessions](#Sessions):** Simple memory based session manager based on JS Map
+- **[Sessions](#Sessions):** Simple JS Map based session manager
 - **[Cookies](#Cookies):** Simple cookie manager for session cookies
-- **[Configurable](#Config):** One file to supply configuration info
+- **[Configurable](#Config):** One configuration file
 - **[Request, Response](#Request-Response)** handler signature
 - **Error Handling:** All errors bubble to a single block
+- **Two Dependencies** A database driver and multipart/form-data parsing
 
 ### Application File System Structure ###
 The directory structure of an application using G9 might as follows:
@@ -200,14 +201,17 @@ const config = {
 ```
 ---
 ### Dependencies (Optional) ###
-- postgres by porsager - https://github.com/porsager/postgres
-- @fastify/busboy - https://github.com/fastify/busboy
+- postgres by porsager - postgresql driver - https://github.com/porsager/postgres
+- @fastify/busboy - multipart/form-data (file upload) - https://github.com/fastify/busboy
 ---
 ### Inspired by (in no particular order) ###
 - Koa.js
 - Hono.js
+- Fastify.js
 - Blacksheep (Python)
 - Flask
 - Bottle
-- And many others
+- Chi (Go)
+- Echo
+- And many many others
 
