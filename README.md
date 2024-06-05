@@ -9,7 +9,8 @@ Written only to learn and experiment.
   - supports path based typed variables: int, string and float
   - per route middleware
   - customizable not found
-- **[Static Files with Compression](#Static-Files):**
+- **[Sender Functions](#Sender-Functions) - html, text, json, stream, buffer utilities.
+- **[Static Files with Compression](#Static-Files)**
   - Gzip and Brotli
   - Etag support
 - **[Middleware](#Router)** Support for 'per Route' unique middleware stacks
@@ -84,6 +85,25 @@ const routes_init = (g9) => {
 ```
 
 Router.compose is based on MIT licensed 'koa-compose' package ( https://github.com/koajs/compose )
+
+---
+### Send_XXXX Functions ###
+
+    `send_buffer,
+    send_html,
+    send_json,
+    send_stream,
+    send_text,
+    send_error,
+    send_file`
+
+The send_xxxx (buffer, html, json, stream, text, error, and file) functions all have the same signature:
+
+  `(response, status = response.statusCode, data = response.body, hdrs = {}, max_age = 0)` 
+
+The response object, a http status code, data, http headers and max-age for cacheing. Other than the response, all are defaulted.
+
+IMPORTANT: Because g9 provides the native node request and response objects to handlers there is complete freedom send responses as needed.  In this case response.end() must be called.  Use of send_xxxx functions will automatically invoke response.end().
 
 ---
 ### Static Files ###
@@ -263,7 +283,7 @@ g9.listen().then().catch((err) => {
       let id = req.route.params.get('id'),
           sql = pg_sql`SELECT id, email, uname, status, dt_create
               FROM
-                ea2.tbl_user WHERE id = ${ id };` // see https://github.com/porsager/postgres#query-parameters
+                myschema.tbl_user WHERE id = ${ id };` // see https://github.com/porsager/postgres#query-parameters
       let rows = await sql_exec(sql)
       res.prepare((rows.length) ? 200 : 404, rows, send_json )  //404 for id not found
   }
