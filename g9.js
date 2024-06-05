@@ -80,7 +80,7 @@ const request_parse = (request, response) => {
 
 }
 
-//TODO - consider symbols
+//TODO - incorporate symbols
 const augment = (g9, request, response) => {
 
     //augment request
@@ -170,7 +170,7 @@ const augment = (g9, request, response) => {
         //json, text, html, binary, etc
         //avoids typeof and duck typing ... and error format...
 
-        //create session ? 
+        //create session ?
         if (request.route.session_create) {
             let sess = session_create(g9, request, response)
             request.session_mgr = g9._session_mgr
@@ -228,22 +228,22 @@ class G9 {
             if (port) {
                 this._port = port
             }
-    
+
             this._server.on('listening', () => {
                 this._logger.info(`${this._protocol}${this._hostname}:${this._port} started at ${new Date()}`)
                 this._server.on('request', this.serve)// register handler
                 resolve();
             })
-    
+
             this._server.on('error', (err) => {
                 this._logger.error('Server listen error', err);
                 reject(err);
             })
-    
+
             this._server.listen({ port: this._port });
         });
     }
-    
+
 
     log(req, res) {
         this._logger.info(this._date_formatter(new Date()),
