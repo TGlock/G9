@@ -204,12 +204,14 @@ Example directory structure of an application built using G9:
       - (etc)
 
   Notes:
-  - main.js is startup file for Nodejs.
+  
   - app and g9 are sibling directories.
-  - app.js includes whatever other modules are required for the application.
-  - app.js potentially imports api endpoint modules such as api_users etc.
+  - main.js is Nodejs startup file.
+  - app.js imports ( directly or indirectly ) other modules required for the application.
+    - Ex. app.js imports ( directly or indirectly ) modules with api endpoints.
+  - app.js assigns exported route handlers to g9 router
   - app imports database module with associated driver and class and/or utility functions
-  - app may import any modules as needed from g9
+  - app may import any modules from g9 and execute functions directly
     - sender.js
     - compress.js
     - etc..
