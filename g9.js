@@ -126,35 +126,6 @@ const augment = (g9, request, response) => {
         }
     }
 
-    response.sendex = function (status = this.statusCode, data = this.body, headers = {}) {
-
-        if (data?.pipe) { // stream
-
-            headers['transfer-encoding'] = 'chunked'
-
-        } else { // other...
-
-            if (Buffer.isBuffer(data)) {
-                headers['content-length'] = data.length
-            } else {
-                if (typeof data === 'object') {
-                    data = JSON.stringify(data)
-                }
-                headers['content-length'] = Buffer.byteLength(data)
-            }
-
-        }
-
-        this.writeHead(status, STATUS_CODES[status], headers)
-
-        if ((status === 304 || this.req.method === 'HEAD')) {
-            this.end()
-        } else {
-            (data?.pipe) ? data.pipe(this) : this.end(data)
-        }
-
-    }
-
     // WHATWG url parsing ... see https://nodejs.org/api/url.html#class-url
     request.URL = new URL(g9._protocol + request.headers.host + request.url)
     request.path = decodeURIComponent(request.url) //URL.pathname can have percent encoded chars...
