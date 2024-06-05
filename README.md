@@ -219,7 +219,7 @@ Example directory structure of an application built using G9:
 import { G9 } from './G9/g9.js'
 import { config } from './app/config.js'
 import { routes_init } from './app/app.js'
-import { database_open, orm_init } from './app/lib/database.js'
+import { database_open } from './app/lib/database.js'
 
 // create G9
 const g9 = new G9(config)
@@ -227,18 +227,14 @@ const g9 = new G9(config)
 // open database
 const db = database_open(config)
 
-// initialize orm
-const orm = await orm_init(db)
-
 // init routes
-await routes_init(g9, orm)
+await routes_init(g9)
 
 // listen
 g9.listen().then().catch((err) => {
     g9.logger.error('Unable to start server.')
-})```
-
-
+})
+```
 ---
  ### Request, Response ###
 
