@@ -9,7 +9,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - supports path based variables including types: int, string and float
   - path based middleware
   - custom not found
-- **[Static Files with Compression](#StaticFiles) and Cacheing:**
+- **[Static Files with Compression](#Static-Files) and Cacheing:**
   - Gzip and Brotli 
   - Etag support 
   - File watcher - auto recompress 
