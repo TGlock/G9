@@ -172,9 +172,11 @@ const config = {
 
 ---
 ### Application Directory Structure ###
-The directory structure of an application using G9 might as follows:
+Example directory structure of an application built using G9:
 
+  main.js  
   - app
+    - app.js
     - config.js
     - api
       - api_users.js
@@ -202,6 +204,7 @@ The directory structure of an application using G9 might as follows:
       - (etc)
 
   Notes:
+  - main.js is starting point.
   - app and g9 are sibling directories.
   - app contains api endpoints such as users etc.
   - app manages database and associated driver and code
