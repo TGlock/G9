@@ -27,8 +27,8 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
 
-  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with the wildcard '\*'  
-  **variable** - `/some/id/:int:id/` paths with named segment parameters  
+  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with wildcard '\*'  
+  **variable** - `/seg1/seg2/:int:id/` paths with one or more segment variables 'id'  
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'  
 
   **Initializing Routes**
@@ -83,7 +83,7 @@ r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 
 Static file handling functions are located in sender.js and compress.js.
 
-These functions support streaming data from disk and/or compressing files below a certain size and storing size, etag, mimetype, etc in a Map so responses may be sent instantly.
+These support streaming from disk and/or compressing files below a certain size and storing size, etag, mimetype, etc in a Map so responses may be sent instantly.
 
 ---
 ### Logging ###
@@ -203,20 +203,22 @@ The directory structure of an application using G9 might as follows:
   - app manages database and associated driver and code
   - app dictates static file response via functions in g9/sender.js
   - app dictates compression rules via functions in g9/compress.js
-  - app can utilize a file system watcher to look for changes and recompress etc.
+  - app can utilize a file system watcher to react to changes, recompress etc.
 
 ---
  ### Request, Response ###
 
   Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
 
-  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
+  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. 
+  
+  Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
 
   The native node request and response objects are minimally decorated in the G9.augment method method.
 
-  A lesson learned was that use of middleware that needs to alter the response requires some mechanism to hold (buffer) the response until the last middleware returns.
+  Note use of middleware that must alter a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.  ( This is true of any framework )  Buffering data across requests, async function processing during requests and number of concurrent requests costs memory in any system.
 
-  However, this is at odds with streaming responses; thus there is functionality to support both requirements simultaneously.
+  At the same time, streaming responses can lower memory costs, thus there is functionality to support both requirements simultaneously.
 
 ---
 
