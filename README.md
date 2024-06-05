@@ -229,7 +229,7 @@ The directory structure of an application using G9 might as follows:
 ### Error Handling ###
 - All errors are trapped in a try catch wrapping the call to the handler assigned to the route.
 - Heuristics are applied to determine appropriate response content-type (json, html, text etc.)
-    Not optimal and better options exist.
+  - Not optimal and better options exist.
   
 ---
 ### Dependencies (Optional) ###
