@@ -34,12 +34,12 @@ The directory structure of an application using G9 might as follows:
     - lib  
       - database.js  
       - utils.js  
-      - web  
-        - static    
-          - htm  
-          - img  
-          - css  
-          - js  
+    - web  
+      - static    
+        - htm  
+        - img  
+        - css  
+        - js  
   - g9
     - lib
       - g9.js
