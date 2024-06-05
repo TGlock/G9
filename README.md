@@ -1,8 +1,8 @@
-# g9 - a simple nodejs ~~Web Framework~~ library #
+# g9 - a minimal nodejs web framework #
 
 ## Minimal ##
 
-A minimalist Node.js ~~framework~~ library written to learn and experiment. 
+A minimal Node.js web framework written to learn and experiment. 
 
 ### Features ###
 - **[Router](#Router)**
