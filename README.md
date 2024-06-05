@@ -174,7 +174,7 @@ const config = {
 ### Application Directory Structure ###
 Example directory structure of an application built using G9:
 
-  main.js  
+  - main.js  
   - app
     - app.js
     - config.js
@@ -211,6 +211,33 @@ Example directory structure of an application built using G9:
   - app dictates static file response via functions in g9/sender.js
   - app dictates compression rules via functions in g9/compress.js
   - app can utilize a file system watcher to react to changes, recompress etc.
+
+**main.js** 
+```js
+"use strict";
+
+import { G9 } from './G9/g9.js'
+import { config } from './app/config.js'
+import { routes_init } from './app/app.js'
+import { database_open, orm_init } from './app/lib/database.js'
+
+// create G9
+const g9 = new G9(config)
+
+// open database
+const db = database_open(config)
+
+// initialize orm
+const orm = await orm_init(db)
+
+// init routes
+await routes_init(g9, orm)
+
+// listen
+g9.listen().then().catch((err) => {
+    g9.logger.error('Unable to start server.')
+})```
+
 
 ---
  ### Request, Response ###
