@@ -1,4 +1,4 @@
-# G9 - a simple NodeJS ~~web framework~~ library #
+# G9 - a simple nodejs ~~Web Framework~~ library #
 
 ## Minimal ##
 
