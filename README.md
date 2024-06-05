@@ -210,15 +210,16 @@ The directory structure of an application using G9 might as follows:
 
   Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
 
-  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. 
+  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create an additional context object.  See g9.augment() for details.  Use of symbols (TODO) should help avoid name collisions with 3rd party and future nodejs attributes.
+
+  Note: 
+  Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.   
   
-  Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
+  request.prepare(...) and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing. 
 
-  The native node request and response objects are minimally decorated in the G9.augment method method.
+  ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
-  Note use of middleware that must alter a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.  ( This is true of any framework )  Buffering data across requests, async function processing during requests and number of concurrent requests costs memory in any system.
-
-  At the same time, streaming responses can lower memory costs, thus there is functionality to support both requirements simultaneously.
+  Simple streaming responses can help lower memory costs, and there is functionality to support streaming (chunked) responses.  See send_stream() and send_file().
 
 ---
 
