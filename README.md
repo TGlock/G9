@@ -217,7 +217,7 @@ The directory structure of an application using G9 might as follows:
   Note: 
   Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.   
   
-  request.prepare(...) and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing. 
+  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing. 
 
   ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
