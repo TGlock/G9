@@ -137,7 +137,8 @@ r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 
 Static file handling functions are located in sender.js and compress.js.  
 
-These functions support streaming data from disk and/or compressing files below a certain size and storing meta data such as size, etag, mimetype, etc in a Map so responses may be sent instantly.
+These functions support streaming data from disk and/or compressing files below a certain size and storing size, etag, mimetype, etc in a Map so responses may be sent instantly.
+
 ---
 ### Logging ###
 ---
