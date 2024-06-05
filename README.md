@@ -140,8 +140,15 @@ These functions support streaming data from disk and/or compressing files below 
 ### Logging ###
 ---
 ### Sessions ###
+
+  - See session.js Session class.  
+  - Maintains a cache of sessions and uses a timer to expire sessions as needed.  
+  - Depends on crypto.js for secure session id generation.
+
 ---
 ### Cookies ###
+
+  See cookie.js cookie_set and cookie_get functions
 
 ---
 ### Inspired by (in no particular order) ###
