@@ -79,7 +79,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
     
-  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or ending wildcard '\*'  
+  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with the wildcard '\*'  
   **variable** - `/some/id/:int:id/` paths with named segment parameters  
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*' 
       
@@ -141,14 +141,16 @@ r.get('/middleware', create_route_middleware_stack(r))
 ---    
 ### Static Files ###
 
-Static file handling functions are located in sender.js.  
+Static file handling functions are located in sender.js and compress.js.  
 
-These functions support scenarios such as file streaming from disk and/or compressing files below a certain size and storing sizes, etags, mimetypes and other data in a map such that responses can be sent immediately.  The latter capability is associated with a file watcher to ensure changes are captured.
+These functions support streaming data from disk and/or compressing files below a certain size and storing meta data such as size, etag, mimetype, etc in a Map so responses may be sent instantly.
 
 ---
 ### Inspired by (in no particular order) ###
 - Koa.js
 - Hono.js
 - Blacksheep (Python)
+- Flask
+- Bottle
 - And many others
 
