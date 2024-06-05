@@ -25,33 +25,33 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - @fastify/busboy - https://github.com/fastify/busboy
 
 ### Application File System Structure ###
-- The directory structure of an application using G9 might as follows:
+The directory structure of an application using G9 might as follows:
 
-- app
-  - api
-    - api_users.js
-    - api_xxxxx.js
-  - lib
-    - database.js
-    - utils.js
-  - web
-    - static
-      - htm
-      - img
-      - css
-      - js
-- g9
-  - lib
-    - g9.js
-    - compress.js
-    - router.js
-    - sender.js
-    - sessions.js
-    - cookie.js
-    - logger.js
-    - mime.js
-    - multipart.js
-    - (etc)
+  - app  
+    - api  
+      - api_users.js  
+      - api_xxxxx.js  
+    - lib  
+      - database.js  
+      - utils.js  
+      - web  
+        - static    
+          - htm  
+          - img  
+          - css  
+          - js  
+  - g9
+    - lib
+      - g9.js
+      - compress.js
+      - router.js
+      - sender.js
+      - sessions.js
+      - cookie.js
+      - logger.js
+      - mime.js
+      - multipart.js
+      - (etc)
 
   Notes:
   - app and g9 are sibling directories.
@@ -105,37 +105,29 @@ r.get('/file', do_file)
 r.add_route(path, 'GET', func)
 
 // route middleware example 
-const create_route_middleware_stack = (router) => {
-  const authenticated = async (req, res, fn) => {
-      console.log('a enter')
-      res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
-      if (fn) await fn()
-      console.log('a exit')
-  }
-  const authorized = async (req, res, fn) => {
-      console.log('b enter')
-      res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
-      if (fn) await fn()
-      console.log('b exit')
-  }
-  const handle_route = async (req, res, fn) => {
-      console.log('c enter')
-      if (fn) await fn()
-      res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
-      console.log('c exit')
-  }
-
-  /*
-  Router.compose accepts an array of async functions and executes them in the order passed.
-  Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  
-  */
-
-  return router.compose([authenticated, authorized, handle_route])
-
+const authenticated = async (req, res, fn) => {
+    console.log('a enter')
+    res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
+    if (fn) await fn()
+    console.log('a exit')
+}
+const authorized = async (req, res, fn) => {
+    console.log('b enter')
+    res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
+    if (fn) await fn()
+    console.log('b exit')
+}
+const handle_route = async (req, res, fn) => {
+    console.log('c enter')
+    if (fn) await fn()
+    res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
+    console.log('c exit')
 }
 
-//The function returned from router.compose() must then be added the the router. 
-r.get('/middleware', create_route_middleware_stack(r))
+/* Router.compose accepts an array of async functions and executes them in the order passed.
+Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  */
+
+r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 ```
 
 ---    
