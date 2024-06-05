@@ -91,15 +91,18 @@ Router.compose is based on MIT licensed 'koa-compose' package ( https://github.c
 
   `send_buffer, send_html, send_json, send_stream, send_text, send_error, send_file`
 
-The send_xxxx (buffer, html, json, stream, text, error, and file) functions all have the same signature:
+  The send_xxxx functions all have the same signature:
 
   `(response, status = response.statusCode, data = response.body, hdrs = {}, max_age = 0)` 
 
-  The response object, a http status code, data, http headers and max-age for cacheing. Other than the response, all are defaulted.
+  The response object, an http status code, data, http headers and max-age for cacheing. 
+  
+  Other than the response, all are defaulted.
 
   IMPORTANT:
   - Content-Type should/must be explicity set prior to invoking send_stream and send_buffer
-  - Because g9 provides the native node request and response objects to handlers there is complete freedom send responses as needed.  In this case response.end() must be called.  Use of send_xxxx functions will automatically invoke response.end().
+  - Because g9 provides the native node request and response objects to handlers there is complete freedom send responses as needed.  In this case response.end() must be called.
+  - Use of send_xxxx functions automatically invokes response.end().
 
 ---
 ### Static Files ###
