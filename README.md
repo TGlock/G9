@@ -219,7 +219,7 @@ The directory structure of an application using G9 might as follows:
 
   ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
-  Simple streaming responses can help lower memory costs, and there is functionality to support streaming (chunked) responses.  See send_stream() and send_file().
+  Simple streaming helps lower memory costs, and there is functionality to support chunked responses.  See send_stream() and send_file().
 
 ---
 
