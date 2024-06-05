@@ -19,7 +19,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **[Configurable](#Config):** One configuration file
 - **[Request, Response](#Request-Response)** handler signature
 - **Error Handling:** All errors bubble to a single block
-- **Two [Dependencies](#Optional-Dependencies)** A database driver and multipart/form-data parsing
+- **Two [Dependencies](#Dependencies-Optional)** A database driver and multipart/form-data parsing
 
 ---
  ### Router ###
