@@ -21,10 +21,6 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **[Configurable](#Config):** One file to supply configuration info
 - **Request, Response** handler signature
 
-### Dependencies (Optional) ### 
-- postgres by porsager - https://github.com/porsager/postgres
-- @fastify/busboy - https://github.com/fastify/busboy
-
 ### Application File System Structure ###
 The directory structure of an application using G9 might as follows:
 
@@ -151,12 +147,12 @@ These functions support streaming data from disk and/or compressing files below 
 ---
 ### Cookies ###
 
-  See cookie.js cookie_set and cookie_get functions
+  See cookie.js functions: cookie_set and cookie_get
 
 ---
 ### Config ###
 
-One config file supplying the following:
+See config.js.  (May explore reading an environment variable for file location first)
 
 ```js
 const config = {
@@ -202,7 +198,10 @@ const config = {
     crypt_key : '1c85016910bc4b863aa76a8eca923f83',
 }
 ```
-
+---
+### Dependencies (Optional) ### 
+- postgres by porsager - https://github.com/porsager/postgres
+- @fastify/busboy - https://github.com/fastify/busboy
 ---
 ### Inspired by (in no particular order) ###
 - Koa.js
