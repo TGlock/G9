@@ -18,7 +18,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **[Cookies](#Cookies):** Simple cookie manager for session cookies
 - **[Configurable](#Config):** One configuration file
 - **[Request, Response](#Request-Response)** handler signature
-- **[Application Directory Structure](#Application-File-System-Structure)** Application File System structure
+- **[Application Directory Structure](#Application-Directory-Structure)** Application Directory structure
 - **Two [Dependencies](#Dependencies-Optional)** A database driver and multipart/form-data parsing
 - **Error Handling:** All errors bubble to a single block
 
@@ -170,7 +170,7 @@ const config = {
 }
 ```
 ---
-### Application File System Structure ###
+### Application Directory Structure ###
 The directory structure of an application using G9 might as follows:
 
   - app
