@@ -29,7 +29,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 The directory structure of an application using G9 might as follows:
 
   - app
-    config.js 
+    - config.js 
     - api  
       - api_users.js  
       - api_xxxxx.js  
