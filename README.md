@@ -17,7 +17,7 @@ Written only to learn and experiment.
 - **[Sessions](#Sessions)** Simple JS Map based session manager
 - **[Cookies](#Cookies)** Simple cookie manager for session cookies
 - **[Configurable](#Config)** One configuration file
-- **[Request, Response](#Request-Response)** handler signature
+- **[Request, Response](#Request-Response)** Handler signatures and buffering for middleware
 - **[Application Directory Structure](#Application-Directory-Structure)** Application Directory structure
 - **Two [Dependencies](#Dependencies-Optional)** A database driver and multipart/form-data parsing
 - **Error Handling** All errors bubble to a single block
