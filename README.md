@@ -88,25 +88,23 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 ```js
 let r = g9.router
 
-/* set custom 404 handler */
+// set custom 404 handler 
 r.not_found = do_not_found  
 
 /* exclude a route from session check & create. */
 r.get('/favicon.ico', do_favicon).session_create = false  
 
-/* various datatypes supported */
+// various datatypes supported 
 r.get('/json', do_json)
 r.get('/html', do_html)
 r.get('/text', do_text)
 r.get('/buffer', do_buffer)
 r.get('/file', do_file)
 
-/* pass method as parameter example */
+// pass method as parameter example 
 r.add_route(path, 'GET', func)
 
-/* 
-  route middleware example 
-*/
+// route middleware example 
 const create_route_middleware_stack = (router) => {
   const authenticated = async (req, res, fn) => {
       console.log('a enter')
@@ -127,17 +125,16 @@ const create_route_middleware_stack = (router) => {
       console.log('c exit')
   }
 
-  /* 
-    Router.compose accepts a variable number of async functions and executes them in the order passed.
-    Each function must have the signature shown above and is responsible to call the next function or throw. 
+  /*
+  Router.compose accepts an array of async functions and executes them in the order passed.
+  Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  
   */
+
   return router.compose([authenticated, authorized, handle_route])
 
 }
 
-/* 
-  The function returned from router.compose must then be added the the router with path and method as always. 
-*/
+//The function returned from router.compose() must then be added the the router. 
 r.get('/middleware', create_route_middleware_stack(r))
 ```
 
