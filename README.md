@@ -78,7 +78,7 @@ Each function must have the (res, res, fn) signature shown above and is responsi
 r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 ```
 
-Router.compose is based on MIT licensed 'koa-compose' package
+Router.compose is based on MIT licensed 'koa-compose' package ( https://github.com/koajs/compose )
 
 ---
 ### Static Files ###
