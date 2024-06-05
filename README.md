@@ -85,59 +85,61 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
       
   **Initializing Routes**
   
-    let r = g9.router
+```js
+let r = g9.router
 
-    /* set custom 404 handler */
-    r.not_found = do_not_found  
+/* set custom 404 handler */
+r.not_found = do_not_found  
 
-    /* exclude a route from session check & create. */
-    r.get('/favicon.ico', do_favicon).session_create = false  
+/* exclude a route from session check & create. */
+r.get('/favicon.ico', do_favicon).session_create = false  
 
-    /* various datatypes supported */
-    r.get('/json', do_json)
-    r.get('/html', do_html)
-    r.get('/text', do_text)
-    r.get('/buffer', do_buffer)
-    r.get('/file', do_file)
+/* various datatypes supported */
+r.get('/json', do_json)
+r.get('/html', do_html)
+r.get('/text', do_text)
+r.get('/buffer', do_buffer)
+r.get('/file', do_file)
 
-    /* pass method as parameter example */
-    r.add_route(path, 'GET', func)
-    
-    /* 
-      route middleware example 
-    */
-    const create_route_middleware_stack = (router) => {
-      const authenticated = async (req, res, fn) => {
-          console.log('a enter')
-          res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
-          if (fn) await fn()
-          console.log('a exit')
-      }
-      const authorized = async (req, res, fn) => {
-          console.log('b enter')
-          res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
-          if (fn) await fn()
-          console.log('b exit')
-      }
-      const handle_route = async (req, res, fn) => {
-          console.log('c enter')
-          if (fn) await fn()
-          res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
-          console.log('c exit')
-      }
+/* pass method as parameter example */
+r.add_route(path, 'GET', func)
 
-      /* 
-        Router.compose accepts a variable number of async functions and executes them in the order passed.
-        Each function must have the signature shown above and is responsible to call the next function or throw. 
-      */
-      return router.compose([authenticated, authorized, handle_route])
-    
-    }
+/* 
+  route middleware example 
+*/
+const create_route_middleware_stack = (router) => {
+  const authenticated = async (req, res, fn) => {
+      console.log('a enter')
+      res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
+      if (fn) await fn()
+      console.log('a exit')
+  }
+  const authorized = async (req, res, fn) => {
+      console.log('b enter')
+      res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
+      if (fn) await fn()
+      console.log('b exit')
+  }
+  const handle_route = async (req, res, fn) => {
+      console.log('c enter')
+      if (fn) await fn()
+      res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
+      console.log('c exit')
+  }
 
-    /* 
-      The function returned from router.compose must then be added the the router with path and method as always. 
-    */
-    r.get('/middleware', create_route_middleware_stack(r))`
+  /* 
+    Router.compose accepts a variable number of async functions and executes them in the order passed.
+    Each function must have the signature shown above and is responsible to call the next function or throw. 
+  */
+  return router.compose([authenticated, authorized, handle_route])
+
+}
+
+/* 
+  The function returned from router.compose must then be added the the router with path and method as always. 
+*/
+r.get('/middleware', create_route_middleware_stack(r))
+```
 
 ---    
 ### Static Files ###
