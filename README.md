@@ -6,20 +6,19 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 
 ### Features ###
 - **[Router](#Router)**
-  - supports path based variables including types: int, string and float
-  - path based middleware
-  - custom not found
-- **[Static Files with Compression](#Static-Files) and Cacheing:**
+  - supports path based typed variables: int, string and float
+  - per route middleware
+  - customizable not found
+- **[Static Files with Compression](#Static-Files):**
   - Gzip and Brotli
   - Etag support
-  - File watcher - auto recompress
 - **[Middleware](#Router):** Support for 'per Route' unique middleware stacks
-- **Error Handling:** All errors bubble to a single block
 - **[Logging](#Logging):** Extends console for logging
 - **[Sessions](#Sessions):** Simple memory based session manager based on JS Map
 - **[Cookies](#Cookies):** Simple cookie manager for session cookies
 - **[Configurable](#Config):** One file to supply configuration info
-- **Request, Response** handler signature
+- **[Request, Response](#Request-Response)** handler signature
+- **Error Handling:** All errors bubble to a single block
 
 ### Application File System Structure ###
 The directory structure of an application using G9 might as follows:
@@ -57,6 +56,7 @@ The directory structure of an application using G9 might as follows:
   - app manages database and associated driver and code
   - app dictates static file response via functions in g9/sender.js
   - app dictates compression rules via functions in g9/compress.js
+  - app can utilize a file system watcher to look for changes and recompress etc.
 
 ---
  ### Request, Response ###
