@@ -18,6 +18,7 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **[Logging](#Logging):** Extends console for logging 
 - **[Sessions](#Sessions):** Simple memory based session manager based on JS Map
 - **[Cookies](#Cookies):** Simple cookie manager for session cookies
+- **[Configurable](#Config):** One file to supply configuration info
 - **Request, Response** handler signature
 
 ### Dependencies (Optional) ### 
@@ -27,14 +28,15 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 ### Application File System Structure ###
 The directory structure of an application using G9 might as follows:
 
-  - app  
+  - app
+    config.js 
     - api  
       - api_users.js  
       - api_xxxxx.js  
     - lib  
       - database.js  
       - utils.js  
-    - web  
+    - web  (can be located on any reachable drive. root of \web is supplied in config.)
       - static    
         - htm  
         - img  
@@ -149,6 +151,56 @@ These functions support streaming data from disk and/or compressing files below 
 ### Cookies ###
 
   See cookie.js cookie_set and cookie_get functions
+
+---
+### Config ###
+
+One config file supplying the following:
+
+```js
+const config = {
+
+    database: {
+        user: 'postgres',
+        host: 'localhost',
+        database: 'xxxxx',
+        password: 'xxxxx',
+        port: 5432,
+    },
+    session: {
+        cookie: 'g9-sid', //session cookie name
+        ttl: 1000 * 2, // two seconds (development testing)
+        secret: 'secretkey',
+        file: '/Users/tomglock/dev/node/next_3/sessions.json',
+        schedule: 1000 * 60, //in ms (5 minutes)
+    },
+    date_format: {
+        weekday: 'narrow',
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: 'numeric',
+        fractionalSecondDigits: 3,
+        hour12: true,
+        timeZone: 'EST'
+    },
+    csrf: true,
+    date_formatter : { locale : 'en-US' },
+    hostname: '127.0.0.1',
+    port: 8080,
+    api_prefix: '/api/',
+    watch_update_delay: 500,
+    static_parent: '/Users/tomglock/dev/node/next_3/app/web',
+    static_prefix: '/static/',
+    static_folder_path: '/Users/tomglock/dev/node/next_3/app/web/static/',
+    favicon_file: '/Users/tomglock/dev/node/next_3/app/web/static/img/favicon.ico',
+    upload_dir: '/Users/tomglock/dev/node/next_3/app/web/static/uploads/',
+    view_path: '/Users/tomglock/dev/node/next_3/app/web/static/views/',
+    crypt_key : '1c85016910bc4b863aa76a8eca923f83',
+}
+```
 
 ---
 ### Inspired by (in no particular order) ###
