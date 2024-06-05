@@ -29,7 +29,7 @@ Written only to learn and experiment.
     - Paths
 
   **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with wildcard '\*'  
-  **variable** - `/seg1/seg2/:int:id/` paths with one or more segment variables 'id'  
+  **variable** - `/seg1/seg2/:id:str/` paths with one or more segment variables 'id'  
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'  
 
   **Initializing Routes**
@@ -255,6 +255,19 @@ g9.listen().then().catch((err) => {
   Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.   
   
   request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing. 
+  
+  For example a handler for /api/v1/users/:id:str/ might look like this:
+
+  ```js
+  const read_one = async (req, res) => {
+      let id = req.route.params.get('id'),
+          sql = pg_sql`SELECT id, email, uname, status, dt_create
+              FROM
+                ea2.tbl_user WHERE id = ${ id };` // see https://github.com/porsager/postgres#query-parameters
+      let rows = await sql_exec(sql)
+      res.prepare((rows.length) ? 200 : 404, rows, send_json )  //404 for id not found
+  }
+  ```
 
   ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
