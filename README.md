@@ -19,8 +19,8 @@ Written only to learn and experiment.
 - **[Configurable](#Config)** One configuration file
 - **[Request, Response](#Request-Response)** Handler signatures and buffering for middleware
 - **[Application Directory Structure](#Application-Directory-Structure)** Application Directory structure
-- **Two [Dependencies](#Dependencies-Optional)** A database driver and multipart/form-data parsing
-- **Error Handling** All errors bubble to a single block
+- **[Dependencies (Two)](#Dependencies-Optional)** A database driver and multipart/form-data parsing
+- **[Error Handling](#Error-Handling)** All errors trapped at a single point
 
 ---
  ### Router ###
@@ -169,6 +169,7 @@ const config = {
     crypt_key : '1c85016910bc4b863aa76a8eca923f83',
 }
 ```
+
 ---
 ### Application Directory Structure ###
 The directory structure of an application using G9 might as follows:
@@ -223,14 +224,19 @@ The directory structure of an application using G9 might as follows:
   ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
   Simple streaming helps lower memory costs, and there is functionality to support chunked responses.  See send_stream() and send_file().
-
+  
 ---
-
-
+### Error Handling ###
+- All errors are trapped in a try catch wrapping the call to the handler assigned to the route.
+- Heuristics are applied to determine appropriate response content-type (json, html, text etc.)
+    Not optimal and better options exist.
+  
+---
 ### Dependencies (Optional) ###
 - postgres by porsager - postgresql driver - https://github.com/porsager/postgres
 - @fastify/busboy - multipart/form-data (file upload) - https://github.com/fastify/busboy
 ---
+
 ### Inspired by (in no particular order) ###
 - Koa.js
 - Hono.js
