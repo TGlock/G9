@@ -13,11 +13,11 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
   - Gzip and Brotli 
   - Etag support 
   - File watcher - auto recompress 
-- **Middleware:** Support for 'per Route' unique middleware stacks
+- **[Middleware](#Router):** Support for 'per Route' unique middleware stacks
 - **Error Handling:** All errors bubble to a single block
-- **Logging:** Extends console for logging 
-- **Sessions:** Simple memory based session manager based on JS Map
-- **Cookies:** Simple cookie manager for session cookies
+- **[Logging](#Logging):** Extends console for logging 
+- **[Sessions](#Sessions):** Simple memory based session manager based on JS Map
+- **[Cookies](#Cookies):** Simple cookie manager for session cookies
 - **Request, Response** handler signature
 
 ### Dependencies (Optional) ### 
@@ -136,6 +136,12 @@ r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 Static file handling functions are located in sender.js and compress.js.  
 
 These functions support streaming data from disk and/or compressing files below a certain size and storing meta data such as size, etag, mimetype, etc in a Map so responses may be sent instantly.
+---
+### Logging ###
+---
+### Sessions ###
+---
+### Cookies ###
 
 ---
 ### Inspired by (in no particular order) ###
