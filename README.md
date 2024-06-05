@@ -21,57 +21,6 @@ A minimalist Node.js ~~framework~~ library written to learn and experiment.
 - **Error Handling:** All errors bubble to a single block
 - **Two Dependencies** A database driver and multipart/form-data parsing
 
-### Application File System Structure ###
-The directory structure of an application using G9 might as follows:
-
-  - app
-    - config.js
-    - api
-      - api_users.js
-      - api_xxxxx.js
-    - lib
-      - database.js
-      - utils.js
-    - web  (can be located on any reachable drive. root of \web is supplied in config.)
-      - static
-        - htm
-        - img
-        - css
-        - js
-  - g9
-    - lib
-      - g9.js
-      - compress.js
-      - router.js
-      - sender.js
-      - sessions.js
-      - cookie.js
-      - logger.js
-      - mime.js
-      - multipart.js
-      - (etc)
-
-  Notes:
-  - app and g9 are sibling directories.
-  - app contains api endpoints such as users etc.
-  - app manages database and associated driver and code
-  - app dictates static file response via functions in g9/sender.js
-  - app dictates compression rules via functions in g9/compress.js
-  - app can utilize a file system watcher to look for changes and recompress etc.
-
----
- ### Request, Response ###
-
-  Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
-
-  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
-
-  The native node request and response objects are minimally decorated in the G9.augment method method.
-
-  A lesson learned was that use of middleware that needs to alter the response requires some mechanism to hold (buffer) the response until the last middleware returns.
-
-  However, this is at odds with streaming responses; thus there is functionality to support both requirements simultaneously.
-
 ---
  ### Router ###
   Supports
@@ -138,17 +87,35 @@ These functions support streaming data from disk and/or compressing files below 
 
 ---
 ### Logging ###
+
+  - Logger.js - utilizes Node's console object and associated log levels writing to stdout and stderr.  As with console (log is an alias for debug.)
+
+  ```js
+  LOG_LEVELS = {
+    trace: 10,
+    log: 20,
+    debug: 20,
+    info: 30,
+    warn: 40,
+    error: 50
+  }
+```
 ---
 ### Sessions ###
 
-  - See session.js Session class.
-  - Maintains a cache of sessions and uses a timer to expire sessions as needed.
+  See session.js Session class.
+  - Maintains a cache of sessions and expires sessions per time to live (ttl) config setting.
   - Depends on crypto.js for secure session id generation.
+  - Will not scale and does not persist between restarts.
+  - Currently using node crypto randomBytes  
 
 ---
 ### Cookies ###
 
-  See cookie.js functions: cookie_set and cookie_get
+  See cookie.js : 
+  -  cookie_set
+  -  cookie_get 
+  -  Needs work
 
 ---
 ### Config ###
@@ -200,6 +167,60 @@ const config = {
 }
 ```
 ---
+### Application File System Structure ###
+The directory structure of an application using G9 might as follows:
+
+  - app
+    - config.js
+    - api
+      - api_users.js
+      - api_xxxxx.js
+    - lib
+      - database.js
+      - utils.js
+    - web  (can be located on any reachable drive. root of \web is supplied in config.)
+      - static
+        - htm
+        - img
+        - css
+        - js
+  - g9
+    - lib
+      - g9.js
+      - compress.js
+      - router.js
+      - sender.js
+      - sessions.js
+      - cookie.js
+      - logger.js
+      - mime.js
+      - multipart.js
+      - (etc)
+
+  Notes:
+  - app and g9 are sibling directories.
+  - app contains api endpoints such as users etc.
+  - app manages database and associated driver and code
+  - app dictates static file response via functions in g9/sender.js
+  - app dictates compression rules via functions in g9/compress.js
+  - app can utilize a file system watcher to look for changes and recompress etc.
+
+---
+ ### Request, Response ###
+
+  Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
+
+  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the request and response objects rather than create an additional context object. Use of symbols (in progress) should help avoid name collisions if 3rd party packages are introduced.
+
+  The native node request and response objects are minimally decorated in the G9.augment method method.
+
+  A lesson learned was that use of middleware that needs to alter the response requires some mechanism to hold (buffer) the response until the last middleware returns.
+
+  However, this is at odds with streaming responses; thus there is functionality to support both requirements simultaneously.
+
+---
+
+
 ### Dependencies (Optional) ###
 - postgres by porsager - postgresql driver - https://github.com/porsager/postgres
 - @fastify/busboy - multipart/form-data (file upload) - https://github.com/fastify/busboy
