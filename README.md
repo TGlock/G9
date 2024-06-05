@@ -9,7 +9,7 @@ Written only to learn and experiment.
   - supports path based typed variables: int, string and float
   - per route middleware
   - customizable not found
-- **[Sender Functions](#Sender-Functions)** Sending common data utilities.
+- **[Sender Functions](#Send_xxxx-Functions)** Sending common data utilities.
 - **[Static Files with Compression](#Static-Files)**
   - Gzip and Brotli
   - Etag support
