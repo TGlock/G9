@@ -268,7 +268,7 @@ g9.listen().then().catch((err) => {
 
   Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
 
-  Early versions of g9 explored a third "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create an additional context object.  See g9.augment() for details.  Use of symbols (TODO) should help avoid name collisions with 3rd party and future nodejs attributes.
+  Early versions of g9 explored incorporating a "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create and decorate an additional context object.  See g9.augment() for details.  Use of ES6 Symbols (TODO) should help avoid name collisions with 3rd party and future nodejs attributes.
 
   Note: 
   Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.   
