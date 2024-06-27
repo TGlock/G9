@@ -29,8 +29,10 @@ Written only to learn and experiment.
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
 
-  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with wildcard '\*'
+  **fixed** - `/this/is/a/path` paths that do not contain '\:' or end with wildcard '\*'
+
   **variable** - `/seg1/seg2/:id:str/` paths with one or more segment variables 'id'
+
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'
 
   **Initializing Routes**
