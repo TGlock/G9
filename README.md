@@ -221,7 +221,6 @@ An example directory structure of an application built on G9.
     - sender.js
     - compress.js
     - etc..
-  - app could utilize a file system watcher to react to changes, recompress etc.
 
 **main.js**
 ```js
