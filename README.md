@@ -174,25 +174,26 @@ class G9 {
 ### Application Directory Structure ###
 Example directory structure of an application built using G9:
 
-  - main.js
-  - app
-    - app.js
-    - config.js
-    - api
-      - api_users.js
-      - api_xxxxx.js
-    - lib
-      - database.js
-      - utils.js
-    - web  (can be located on any reachable drive. root of \web is supplied in config.)
-      - static
-        - htm
-        - img
-        - css
-        - js
+  - myapp
+    - main.js
+    - app
+      - app.js
+      - config.js
+      - api
+        - api_users.js
+        - api_xxxxx.js
+      - lib
+        - database.js
+        - utils.js
+      - web  (can be located on any reachable drive. root of \web is supplied in config.)
+        - static
+          - htm
+          - img
+          - css
+          - js
   - g9
+    - g9.js
     - lib
-      - g9.js
       - compress.js
       - router.js
       - sender.js
@@ -204,9 +205,8 @@ Example directory structure of an application built using G9:
       - (etc)
 
   Notes:
-
-  - app and g9 are sibling directories.
-  - main.js is Nodejs startup file.
+  - /myapp and /g9 are sibling directories.
+  - /myapp/main.js is node startup file.
   - app.js imports ( directly or indirectly ) other modules required for the application.
     - Ex. app.js imports ( directly or indirectly ) modules with api endpoints.
   - app.js assigns exported route handlers to g9 router
