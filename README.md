@@ -172,7 +172,7 @@ class G9 {
 
 ---
 ### Application Directory Structure ###
-Example directory structure of an application built using G9:
+Just one example directory structure of an application built using G9.
 
   - myapp
     - main.js
@@ -205,9 +205,9 @@ Example directory structure of an application built using G9:
       - (etc)
 
   Notes:
-  - /myapp and /g9 are sibling directories.
+  - /myapp and /g9 are sibling directories in this example.
   - /myapp/main.js is node startup file.
-  - app.js imports ( directly or indirectly ) other modules required for the application.
+  - app.js imports G9.js and other /lib modules as and where needed.
     - Ex. app.js imports ( directly or indirectly ) modules with api endpoints.
   - app.js assigns exported route handlers to g9 router
   - app imports database module with associated driver and class and/or utility functions
@@ -215,7 +215,7 @@ Example directory structure of an application built using G9:
     - sender.js
     - compress.js
     - etc..
-  - app can utilize a file system watcher to react to changes, recompress etc.
+  - app could utilize a file system watcher to react to changes, recompress etc.
 
 **main.js**
 ```js
