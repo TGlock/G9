@@ -177,7 +177,7 @@ class G9 {
         this._session_cookie_name = config.session.cookie || 'g9-sid'
         this._session_mgr = new Session(config.session)
         this._upload_dir = config.upload_dir
-        this._server = createServer() //this.serve auto performs .on('request', this.serve)
+        this._server = createServer()
         this._router = new Router()
         this._logger = Logger(config.log_level || LOG_LEVELS.debug)
     }
@@ -329,6 +329,7 @@ class G9 {
                 //  See - https://nodejs.org/api/stream.html#event-data
                 //  Note - Allows data to be processed for ALL http methods thus enabling invalid client requests .. e.g. GET with data
                 //  Note - listener MUST be assigned AFTER multipart check
+                //  TODO - do not exceed this._max_size
                 request.on('data', (data) => { request.chunks.push(data) })
 
                 //handle request
