@@ -178,7 +178,7 @@ class G9 {
 
 ---
 ### Application Directory Structure ###
-Just one example directory structure of an application built using G9.
+An example directory structure of an application built on G9.
 
   - myapp
     - main.js
