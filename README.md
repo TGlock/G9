@@ -2,7 +2,7 @@
 
 ## Minimal ##
 
-Written only to learn and experiment. 
+Written only to learn and experiment.
 
 ### Features ###
 - **[Router](#Router)**
@@ -29,9 +29,9 @@ Written only to learn and experiment.
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'
     - Paths
 
-  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with wildcard '\*'  
-  **variable** - `/seg1/seg2/:id:str/` paths with one or more segment variables 'id'  
-  **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'  
+  **fixed** - `/this/is/a/path` complete paths that do not contain '\:' or end with wildcard '\*'
+  **variable** - `/seg1/seg2/:id:str/` paths with one or more segment variables 'id'
+  **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'
 
   **Initializing Routes**
 
@@ -39,23 +39,23 @@ Written only to learn and experiment.
 const routes_init = (g9) => {
 
   let r = g9.router
-  
+
   // set custom 404 handler
   r.not_found = do_not_found
-  
+
   /* exclude a route from session check & create. */
   r.get('/favicon.ico', do_favicon).session_create = false
-  
+
   // various datatypes supported
   r.get('/json', do_json)
   r.get('/html', do_html)
   r.get('/text', do_text)
   r.get('/buffer', do_buffer)
   r.get('/file', do_file)
-  
+
   // pass method as parameter example
   r.add_route(path, 'GET', func)
-  
+
   // route middleware example
   const authenticated = async (req, res, fn) => {
       console.log('a enter')
@@ -75,10 +75,10 @@ const routes_init = (g9) => {
       res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
       console.log('c exit')
   }
-  
+
   /* Router.compose accepts an array of async functions and executes them in the order passed.
   Each function must have the (res, res, fn) signature shown above and is responsible to invoke fn() or throw.  */
-  
+
   r.get('/middleware', r.compose([authenticated, authorized, handle_route])
 
 }
@@ -93,10 +93,10 @@ Router.compose is based on MIT licensed 'koa-compose' package ( https://github.c
 
   The send_xxxx functions all have the same signature:
 
-  `(response, status = response.statusCode, data = response.body, hdrs = {}, max_age = 0)` 
+  `(response, status = response.statusCode, data = response.body, hdrs = {}, max_age = 0)`
 
-  The response object, an http status code, data, http headers and max-age for cacheing. 
-  
+  The response object, an http status code, data, http headers and max-age for cacheing.
+
   Other than the response, all are defaulted.
 
   IMPORTANT:
@@ -133,71 +133,48 @@ These support streaming from disk and/or compressing files below a certain size 
   - Maintains a cache of sessions and expires sessions per time to live (ttl) config setting.
   - Depends on crypto.js for secure session id generation.
   - Will not scale and does not persist between restarts.
-  - Currently using node crypto randomBytes  
+  - Currently using node crypto randomBytes
 
 ---
 ### Cookies ###
 
-  See cookie.js : 
+  See cookie.js :
   -  cookie_set
-  -  cookie_get 
+  -  cookie_get
   -  Needs work
 
 ---
 ### Config ###
 
-See config.js.  (May explore reading an environment variable for file location first)
+See G9 constructor for config params.
 
 ```js
-const config = {
+class G9 {
 
-    database: {
-        user: 'postgres',
-        host: 'localhost',
-        database: 'xxxxx',
-        password: 'xxxxx',
-        port: 5432,
-    },
-    session: {
-        cookie: 'g9-sid', //session cookie name
-        ttl: 1000 * 2, // two seconds (development testing)
-        secret: 'secretkey',
-        file: '/Users/tomglock/dev/node/next_3/sessions.json', // TODO
-        schedule: 1000 * 60, //in ms (5 minutes)
-    },
-    date_format: {
-        weekday: 'narrow',
-        year: '2-digit',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: 'numeric',
-        fractionalSecondDigits: 3,
-        hour12: true,
-        timeZone: 'EST'
-    },
-    csrf: true,
-    date_formatter : { locale : 'en-US' },
-    hostname: '127.0.0.1',
-    port: 8080,
-    api_prefix: '/api/',
-    watch_update_delay: 500,
-    static_parent: '/Users/tomglock/dev/node/next_3/app/web',
-    static_prefix: '/static/',
-    static_folder_path: '/Users/tomglock/dev/node/next_3/app/web/static/',
-    favicon_file: '/Users/tomglock/dev/node/next_3/app/web/static/img/favicon.ico',
-    upload_dir: '/Users/tomglock/dev/node/next_3/app/web/static/uploads/',
-    view_path: '/Users/tomglock/dev/node/next_3/app/web/static/views/',
-    crypt_key : '1c85016910bc4b863aa76a8eca923f83',
-}
+    constructor(config) {
+        this._port = config.port || 8080
+        this._protocol = config.protocol || 'http://'
+        this._hostname = config.hostname || hostname()
+        this._domain = config.domain || 'app'
+        this._max_size = config._max_size || 1024 * 512
+        this._pid = process.pid + '-'
+        this._decoder_utf8 = new StringDecoder('utf8')
+        this._date_formatter = new Intl.DateTimeFormat(config.date_formatter.locale || 'en-US', config.date_format || { weekday: 'narrow', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: 'numeric', fractionalSecondDigits: 3, hour12: true, timeZone: 'EST' }).format
+        this._csrf = config.csrf || true
+        this._session_cookie_name = config.session.cookie || 'g9-sid'
+        this._session_mgr = new Session(config.session)
+        this._upload_dir = config.upload_dir
+        this._server = createServer()
+        this._router = new Router()
+        this._logger = Logger(config.log_level || LOG_LEVELS.debug)
+    }
 ```
 
 ---
 ### Application Directory Structure ###
 Example directory structure of an application built using G9:
 
-  - main.js  
+  - main.js
   - app
     - app.js
     - config.js
@@ -227,7 +204,7 @@ Example directory structure of an application built using G9:
       - (etc)
 
   Notes:
-  
+
   - app and g9 are sibling directories.
   - main.js is Nodejs startup file.
   - app.js imports ( directly or indirectly ) other modules required for the application.
@@ -240,7 +217,7 @@ Example directory structure of an application built using G9:
     - etc..
   - app can utilize a file system watcher to react to changes, recompress etc.
 
-**main.js** 
+**main.js**
 ```js
 "use strict";
 
@@ -270,11 +247,11 @@ g9.listen().then().catch((err) => {
 
   Early versions of g9 explored incorporating a "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create and decorate an additional context object.  See g9.augment() for details.  Use of ES6 Symbols (TODO) should help avoid name collisions with 3rd party and future nodejs attributes.
 
-  Note: 
-  Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.   
-  
-  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing. 
-  
+  Note:
+  Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.
+
+  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing.
+
   For example a handler for /api/v1/users/:id:str/ might look like this:
 
   ```js
@@ -291,13 +268,13 @@ g9.listen().then().catch((err) => {
   ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
 
   Simple streaming helps lower memory costs, and there is functionality to support chunked responses.  See send_stream() and send_file().
-  
+
 ---
 ### Error Handling ###
 - All errors are trapped in a try catch wrapping the call to the handler assigned to the route.
 - Heuristics are applied to determine appropriate response content-type (json, html, text etc.)
   - Not optimal and better options exist.
-  
+
 ---
 ### Dependencies (Optional) ###
 - postgres by porsager - postgresql driver - https://github.com/porsager/postgres
