@@ -11,7 +11,9 @@ Written only to learn and experiment.
   - per route middleware stack(s) via compose function
   - per route session mapping & cookie setting (defaults to true)
   - customizable '404 not found' handler
-- **[Sender Functions](#Send_xxxx-Functions)** Sending common data utilities.
+- **[Sender Functions](#Send_xxxx-Functions)**
+  - Send xxxx functions:
+    - json, html, text, chunked stream | buffered etc...
 - **[Static Files](#Static-Files)**
   - Compression - Gzip and Brotli
   - Etag support
@@ -19,7 +21,7 @@ Written only to learn and experiment.
 - **[Logging](#Logging)** Extends console for logging
 - **[Sessions](#Sessions)** Simple JS Map based session manager
 - **[Cookies](#Cookies)** Simple cookie manager for session cookies
-- **[Configurable](#Config)** One configuration file
+- **[Config Params](#Config)**
 - **[Request, Response](#Request-Response)** Handler signatures and buffering for middleware
 - **[Application Directory Structure](#Application-Directory-Structure)** Application Directory structure
 - **[Dependencies (Two)](#Dependencies-Optional)** A database driver and multipart/form-data parsing
