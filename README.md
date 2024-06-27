@@ -31,7 +31,7 @@ Written only to learn and experiment.
 
   **fixed** - `/this/is/a/path` paths that do not contain '\:' or end with wildcard '\*'
 
-  **variable** - `/seg1/seg2/:id:str/` paths with one or more segment variables 'id'
+  **variable** - `/seg1/seg2/:id:int/` paths with one or more segment variables. ('id:str' var id must be int)
 
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'
 
