@@ -282,7 +282,6 @@ g9.listen().then().catch((err) => {
 
 ---
 ### Dependencies (Optional) ###
-- postgres by porsager - postgresql driver - https://github.com/porsager/postgres
 - @fastify/busboy - multipart/form-data (file upload) - https://github.com/fastify/busboy
 ---
 
