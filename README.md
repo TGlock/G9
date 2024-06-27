@@ -6,12 +6,14 @@ Written only to learn and experiment.
 
 ### Features ###
 - **[Router](#Router)**
-  - supports path based typed variables: int, string and float
-  - per route middleware
-  - customizable not found
+  - supports GET, PUT, POST, PATCH, DELETE, HEAD & OPTIONS http methods
+  - typed path segment variables: int, string and float e.g. '/api/users/:id:int'
+  - per route middleware stack(s) via compose function
+  - per route session mapping & cookie setting (defaults to true)
+  - customizable '404 not found' handler
 - **[Sender Functions](#Send_xxxx-Functions)** Sending common data utilities.
-- **[Static Files with Compression](#Static-Files)**
-  - Gzip and Brotli
+- **[Static Files](#Static-Files)**
+  - Compression - Gzip and Brotli
   - Etag support
 - **[Middleware](#Router)** Support for 'per Route' unique middleware stacks
 - **[Logging](#Logging)** Extends console for logging
