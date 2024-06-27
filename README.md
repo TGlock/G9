@@ -261,7 +261,7 @@ g9.listen().then().catch((err) => {
 
   request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing.
 
-  Example: a handler for /api/v1/users/:id:str/ might look like this:
+  Example: a handler for `/api/v1/users/:id:str/` might look like this:
 
   ```js
   const read_one = async (req, res) => {
@@ -274,9 +274,13 @@ g9.listen().then().catch((err) => {
   }
   ```
 
-  ( Buffering of data across requests, async function processing during requests and number of concurrent requests will increase memory cost. )
+  Use of route.prepare() is optional and is intended to be used in route handlers with middleware stacks.
+  Common examples are 'protected' routes such as '/api/', '/admin' etc.
 
-  Simple streaming helps lower memory costs, and there is functionality to support chunked responses.  See send_stream() and send_file().
+  Because each handler has access to the native request and response objects, immediate responses can sent.
+
+  Invoking the send_xxxx functions directly without .prepare() avoids buffering.
+  Chunked / streamed responses are supported - see send_stream() and send_file() in sender.js.
 
 ---
 ### Error Handling ###
