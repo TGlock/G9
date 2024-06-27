@@ -276,9 +276,9 @@ g9.listen().then().catch((err) => {
 
 ---
 ### Error Handling ###
-- All errors are trapped in a try catch wrapping the call to the handler assigned to the route.
+- Route handler errors are trapped in a try catch wrapping the call to the handler assigned to the route.
 - Heuristics are applied to determine appropriate response content-type (json, html, text etc.)
-  - Not optimal and better options exist.
+  - Better options exist - needs further exploration and testing for recovery/restart...
 
 ---
 ### Dependencies (Optional) ###
