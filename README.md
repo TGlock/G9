@@ -248,16 +248,20 @@ g9.listen().then().catch((err) => {
 ---
  ### Request, Response ###
 
-  Request handler functions need only accept a request and response. E.g. myhandler = async (req, res) => { ... }
+  Request handler function signatures must accept a request and response as first two parameters.
 
-  Early versions of g9 explored incorporating a "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create and decorate an additional context object.  See g9.augment() for details.  Use of ES6 Symbols (TODO) should help avoid name collisions with 3rd party and future nodejs attributes.
+  E.g. `myhandler = async (req, res) => { ... }`
+
+  Early versions of g9 explored incorporating a "context" (ctx) parameter similar to other frameworks.  Ultimately decided to minimally decorate the native request and response objects rather than create and decorate an additional context object.  See g9.augment() for details.
+
+  Use of ES6 Symbols (TODO) might help avoid name collisions with 3rd party and future nodejs attributes.  ( Needs further exploration. )
 
   Note:
-  Use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.
+  In any framework of any language, the use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.
 
   request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing.
 
-  For example a handler for /api/v1/users/:id:str/ might look like this:
+  Example: a handler for /api/v1/users/:id:str/ might look like this:
 
   ```js
   const read_one = async (req, res) => {
@@ -266,7 +270,7 @@ g9.listen().then().catch((err) => {
               FROM
                 myschema.tbl_user WHERE id = ${ id };` // see https://github.com/porsager/postgres#query-parameters
       let rows = await sql_exec(sql)
-      res.prepare((rows.length) ? 200 : 404, rows, send_json )  //404 for id not found
+      res.prepare((rows.length) ? 200 : 404, rows, send_json )  //404 in case id was not found
   }
   ```
 
