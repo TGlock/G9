@@ -1,0 +1,6 @@
+{
+    "type": "module",
+    "dependencies": {
+        "@fastify/busboy": "^2.1.1"
+    }
+}
