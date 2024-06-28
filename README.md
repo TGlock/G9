@@ -258,10 +258,10 @@ g9.listen().then().catch((err) => {
 
   G9 enables both 'immediate' responses and buffered reponses.
 
-  Buffering and Middleware:\
-  Any framework that enables middleware to alter or cancel a response before it is sent must then buffer the response until after the last middleware executes.
+  __Buffering and Middleware:__\
+  Any framework that enables middleware to alter or cancel a response before it is sent (kinda the main point 😃) must then buffer the response until after the last middleware executes.
 
-  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function.
+  request.prepare(...), response.body and response.reply(...) provide this functionality.
 
   `response.prepare(status, data, send_func, ...headers)`
 
@@ -278,17 +278,17 @@ g9.listen().then().catch((err) => {
   }
   ```
 
-  Use of route.prepare() is optional and is intended to be used in route handlers with middleware stacks.
+  Use of route.prepare() is optional and would typically be used in route handlers with middleware stacks.
   Common examples are 'protected' routes such as '/api/', '/admin' etc.
 
-  Unbuffered Responses and Streaming:\
+  __Unbuffered Responses and Streaming:__\
 
   To send unbuffered responses:
-  Invoke response.send passing status, data and http headers.
+  Invoke response.send().
 
   `response.send = function (status = this.statusCode, data = this.body, headers = null)`
 
-  Invoke any send_xxxx function.  send_stream() and send_file() support chunked / streamed responses.
+  Invoke any send_xxxx function.  Note send_stream() and send_file() support chunked / streamed responses.
 
 ---
 ### Error Handling ###
