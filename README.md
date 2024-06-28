@@ -256,12 +256,14 @@ g9.listen().then().catch((err) => {
 
   Use of ES6 Symbols (TODO) might help avoid name collisions with 3rd party and future nodejs attributes.  ( Needs further exploration. )
 
-  Note:
-  In any framework of any language, the use of middleware that must alter or cancel a response before it is sent implies some mechanism to hold (buffer) the response until the last middleware executes.
+  About middleware and buffering:
+  Any framework that enables middleware to alter or cancel a response before it is sent must then buffer the response until after the last middleware executes.
 
-  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function at any point during request processing.
+  In g9, request.prepare(...), response.body and response.reply(...) provide that functionality and enable buffering of response data and assigning a 'sender' function.
 
-  Example: a handler for `/api/v1/users/:id:str/` might look like this:
+  `response.prepare(status, data, send_func, ...headers)`
+
+  For example: a handler for `/api/v1/users/:id:str/` might look like this:
 
   ```js
   const read_one = async (req, res) => {
@@ -277,7 +279,7 @@ g9.listen().then().catch((err) => {
   Use of route.prepare() is optional and is intended to be used in route handlers with middleware stacks.
   Common examples are 'protected' routes such as '/api/', '/admin' etc.
 
-  Because each handler has access to the native request and response objects, immediate responses can sent.
+  Because each handler has access to the native request and response objects, immediate responses can also be sent.
 
   Invoking the send_xxxx functions directly without .prepare() avoids buffering.
   Chunked / streamed responses are supported - see send_stream() and send_file() in sender.js.

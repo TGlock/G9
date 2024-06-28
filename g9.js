@@ -91,7 +91,7 @@ const augment = (g9, request, response) => {
     request.trace_id = g9._pid + now.toFixed(4)
     request.start_time = now
 
-    // NOTE use of 'function' to ensure 'this' refers to the response itself
+    // NOTE use of 'function' to ensure 'this' is correct
     // see - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
     response.prepare = function (status, data, send_func, ...headers) {
         let max = headers.length;
@@ -139,7 +139,7 @@ const augment = (g9, request, response) => {
     if (request.route) {
         //TODO - consider using route to hint the intended response data type:
         //json, text, html, binary, etc
-        //avoids typeof and duck typing ... and error format...
+        //avoids typeof or duck typing and helps determine the response error content-type...
 
         //create session ?
         if (request.route.session_create) {
@@ -266,8 +266,9 @@ class G9 {
                     await request.route.execute(request, response)
 
                     //send 'prepared' response ?
-                    if (response.reply)
+                    if (response.reply) {
                         await response.reply(response)
+                    }
 
                 } catch (error) {
                     send_error (
