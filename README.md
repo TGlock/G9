@@ -283,11 +283,12 @@ g9.listen().then().catch((err) => {
 
   Unbuffered Responses and Streaming:\
 
-  Invoke the send_xxxx functions directly or response.send (see augment())
+  To send unbuffered responses:
+  Invoke response.send passing status, data and http headers.
 
   `response.send = function (status = this.statusCode, data = this.body, headers = null)`
 
-  send_stream() and send_file() support chunked / streamed responses.
+  Invoke any send_xxxx function.  send_stream() and send_file() support chunked / streamed responses.
 
 ---
 ### Error Handling ###
