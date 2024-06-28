@@ -287,6 +287,21 @@ g9.listen().then().catch((err) => {
 
   All send_xxxx functions directly send the response.
 
+  For example:
+
+  ```js
+  const do_japanese = async (req, res) => {
+
+      send_text(
+          res,
+          200,
+          'Good morning: Ohayō (おはよう) or ohayō gozaimas (おはようございます)',
+          { 'cache-control': 'max-age=120' }
+      )
+      
+  }
+  ```
+
   send_stream() and send_file() support chunked / streamed responses.
 
 ---
