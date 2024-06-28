@@ -256,10 +256,12 @@ g9.listen().then().catch((err) => {
 
   Use of ES6 Symbols (TODO) might help avoid name collisions with 3rd party and future nodejs attributes.  ( Needs further exploration. )
 
-  About middleware and buffering:
+  G9 enables both 'immediate' responses and buffered reponses.
+
+  Buffering and Middleware:\
   Any framework that enables middleware to alter or cancel a response before it is sent must then buffer the response until after the last middleware executes.
 
-  In g9, request.prepare(...), response.body and response.reply(...) provide that functionality and enable buffering of response data and assigning a 'sender' function.
+  request.prepare(...), response.body and response.reply(...) enable buffering of response data and assigning a 'sender' function.
 
   `response.prepare(status, data, send_func, ...headers)`
 
@@ -279,10 +281,13 @@ g9.listen().then().catch((err) => {
   Use of route.prepare() is optional and is intended to be used in route handlers with middleware stacks.
   Common examples are 'protected' routes such as '/api/', '/admin' etc.
 
-  Because each handler has access to the native request and response objects, immediate responses can also be sent.
+  Unbuffered Responses and Streaming:\
 
-  Invoking the send_xxxx functions directly without .prepare() avoids buffering.
-  Chunked / streamed responses are supported - see send_stream() and send_file() in sender.js.
+  Invoke the send_xxxx functions directly or response.send (see augment())
+
+  `response.send = function (status = this.statusCode, data = this.body, headers = null)`
+
+  send_stream() and send_file() support chunked / streamed responses.
 
 ---
 ### Error Handling ###
