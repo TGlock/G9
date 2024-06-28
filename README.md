@@ -281,14 +281,13 @@ g9.listen().then().catch((err) => {
   Use of route.prepare() is optional and would typically be used in route handlers with middleware stacks.
   Common examples are 'protected' routes such as '/api/', '/admin' etc.
 
-  __Unbuffered Responses and Streaming:__\
+  __Unbuffered Responses and Streaming:__
 
-  To send unbuffered responses:
-  Invoke response.send().
+  To send unbuffered responses invoke response.send() a small wrapper around Node's response.end()
 
-  `response.send = function (status = this.statusCode, data = this.body, headers = null)`
+  All send_xxxx functions directly send the response.
 
-  Invoke any send_xxxx function.  Note send_stream() and send_file() support chunked / streamed responses.
+  send_stream() and send_file() support chunked / streamed responses.
 
 ---
 ### Error Handling ###
