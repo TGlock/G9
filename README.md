@@ -35,7 +35,7 @@ Written only to learn and experiment.
 
   **fixed** - `/this/is/a/path` paths that do not contain '\:' or end with wildcard '\*'
 
-  **variable** - `/seg1/seg2/:id:int/` paths with one or more segment variables. ('id:str' var id must be int)
+  **variable** - `/seg1/seg2/:id:int/seg4/:foo:str` paths with one or more segment variables.
 
   **wildcard** - `/static/*` paths with a fixed '/prefix/' and end with '\*'
 
@@ -64,22 +64,22 @@ const routes_init = (g9) => {
 
   // route middleware example
   const authenticated = async (req, res, fn) => {
-      console.log('a enter')
+      console.log('authenticated enter')
       res.prepare(200, 'Authenticated', send_text, 'X-Header', 'A')
       if (fn) await fn()
-      console.log('a exit')
+      console.log('authenticated exit')
   }
   const authorized = async (req, res, fn) => {
-      console.log('b enter')
+      console.log('authorized enter')
       res.prepare(200, res.body += '\nAuthorized', send_text, 'X-Header', 'B')
       if (fn) await fn()
-      console.log('b exit')
+      console.log('authorized exit')
   }
   const handle_route = async (req, res, fn) => {
-      console.log('c enter')
+      console.log('handle_route enter')
       if (fn) await fn()
       res.prepare(200, res.body += '\nHandled', send_text, 'X-Header', 'C')
-      console.log('c exit')
+      console.log('handle_route exit')
   }
 
   /* Router.compose accepts an array of async functions and executes them in the order passed.
@@ -191,7 +191,7 @@ An example directory structure of an application built on G9.
       - lib
         - database.js
         - utils.js
-      - web  (can be located on any reachable drive. root of \web is supplied in config.)
+      - public  (can be located on any reachable drive. also see config.)
         - static
           - htm
           - img
@@ -298,7 +298,7 @@ g9.listen().then().catch((err) => {
           'Good morning: Ohayō (おはよう) or ohayō gozaimas (おはようございます)',
           { 'cache-control': 'max-age=120' }
       )
-      
+
   }
   ```
 
