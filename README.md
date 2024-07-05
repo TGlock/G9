@@ -259,7 +259,7 @@ g9.listen().then().catch((err) => {
   G9 enables both 'immediate' responses and buffered reponses.
 
   __Buffering and Middleware:__\
-  Any framework that enables middleware to alter or cancel a response before it is sent (kinda the main point 😃) must then buffer the response until after the last middleware executes.
+  Any framework that enables middleware to alter or cancel a response before it is sent (often the main point 😃) must then buffer the response until after the last middleware executes.
 
   request.prepare(...), response.body and response.reply(...) provide this functionality.
 
