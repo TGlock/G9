@@ -31,7 +31,7 @@ Written only to learn and experiment.
  ### Router ###
   Supports\
     - HTTP Methods: 'GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'\
-    - Paths are of three types:\
+    - Paths are of three types:
 
   **fixed** - `/this/is/a/path` paths that do not contain '\:' or end with wildcard '\*'
 
